@@ -28,12 +28,7 @@ export const handler = async(event :APIGatewayProxyEvent) => {
     const userId: string|number = email || phoneNumber;
 
     const data = {
-        email,
-        phoneNumber,
-        reminder,
-        reminderDate,
-        userId,
-        
+        ...body,
         id:uuid(),
         TTL: reminderDate/1000,
         pk :userId,

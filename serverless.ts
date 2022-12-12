@@ -4,20 +4,21 @@ import functions from './serverless/functions';
 import dynamoResources from './serverless/dynamoResources';
 
 const serverlessConfiguration: AWS = {
-  service: 'reminderApp',
+  service: 'reminderapp',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: ['serverless-esbuild','serverless-iam-roles-per-function'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
     profile:"EbrahimSLS",
+    // iamRoleStatements, deprecated statment 
     iam:{
       role: {
         statements: [
           {
             Effect:'Allow',
             Action:'dynamodb:*',
-            Resource:'arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/${self:custom.reminderTable}'
+            Resource:'*'
           }
         ]
       }
@@ -59,7 +60,7 @@ const serverlessConfiguration: AWS = {
 
   custom: {
 
-    reminderTable:'${sls:stage}-reminder-table',
+    reminderTable:'${sls:stage}-reminders-table',
 
     esbuild: {
       bundle: true,

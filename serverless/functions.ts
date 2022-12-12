@@ -11,23 +11,43 @@ const functions: AWS["functions"] = {
                 }
             }
         ],
-        package:{
-            patterns:[
-                "node_modules/axios/**"
-            ]
-        }  
     },
-    getRminder : {
-        handler: 'src/functions/getReminder/index.handler',
+    sendRminder : {
+        handler: 'src/functions/sendReminder/index.handler',
+        events: [
+            {
+                stream: {
+                    type:'dynamodb',
+                    arn:{
+                        "Fn::GetAtt":["reminderTable","StreamArn"]
+                    },
+                    filterPatterns:[{eventName:["REMOVE"]}]
+                }
+            }
+        ],
+        //@ts-expect-error
+        iamRoleStatements: [
+            {
+                Effect:'Allow',
+                Action:[
+                    'ses:sendEmail',
+                    'sns:Publish'
+                ],
+                Resource:'*'
+            }
+        ]
+    },
+    getReminders : {
+        handler: 'src/functions/getReminders/index.handler',
         events: [
             {
                 httpApi: {
-                    path:"/get",
-                    method:"get"
+                    path:'/{userId}',
+                    method:'get'
                 }
             }
-        ]
-    }
+        ],
+    },
 }
 
 export default functions
