@@ -8,6 +8,7 @@ const sesClient = new SESClient({});
 const snsClient = new SNSClient({});
 
 export const handler = async(event :DynamoDBStreamEvent) => {
+    
     try {
         
         const reminderPromises =  event.Records.map( async (record) => {

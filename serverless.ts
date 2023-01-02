@@ -10,7 +10,7 @@ const serverlessConfiguration: AWS = {
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
-    profile:"EbrahimSLS",
+    profile:"Ebrahim",
     // iamRoleStatements, deprecated statment 
     iam:{
       role: {
