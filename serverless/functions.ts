@@ -21,7 +21,15 @@ const functions: AWS["functions"] = {
                     arn:{
                         "Fn::GetAtt":["reminderTable","StreamArn"]
                     },
-                    filterPatterns:[{eventName:["REMOVE"]}]
+                    filterPatterns:[
+                        // dynamodb
+                        // {
+                        //     eventName:["REMOVE"],
+                            
+                        // },
+                    ],
+                    // types of eventName :
+                    // "eventName": "INSERT" | "MODIFY" | "REMOVE"
                 }
             }
         ],
